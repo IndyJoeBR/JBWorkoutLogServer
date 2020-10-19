@@ -10,3 +10,4 @@ module.exports = function(sequelize, DataTypes) {
 /*
 The owner_id is a number - a foreign key - that is provided by the middleware and points to a user on the users table.
 */
+
