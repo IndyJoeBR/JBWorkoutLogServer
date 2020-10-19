@@ -31,12 +31,12 @@ router.post('/', function(request, response) {
     })
     .then(            // when complete
       function createSuccess(newLogEntry) {   // if it was successful
-        res.json({                            // return a JSON object
+        response.json({                            // return a JSON object
           newLogEntry: newLogEntry            // of the entry
         });
       },
       function createError(err) {             // if not successful
-        res.send(500, err.message);           // return an error message
+        response.send(500, err.message);           // return an error message
       }
     );
 
@@ -82,7 +82,7 @@ router.get('/:id', function(request, response) {
 
   LogModel
     .findOne({
-      where: { id: data, owner: owner_id }
+      where: { id: data, owner_id: owner_id }
     }).then(
       function findOneSuccess(theLogFromUser) {
         response.json(theLogFromUser);
@@ -132,9 +132,9 @@ router.delete('/:id', function(request, response) {
   let data = request.params.id;   // takes ':id' from URL
   let owner_id = request.user.id; // user id set in validate-session
 
-  AuthTestModel
+  LogModel
     .destroy({    // Sequelize method to remove an item, 
-      where: { id: data, owner: owner_id }    //6
+      where: { id: data, owner_id: owner_id }    //6
     }).then(
       function deleteLogSuccess(data){    //7
         response.send('[server] log entry removed');

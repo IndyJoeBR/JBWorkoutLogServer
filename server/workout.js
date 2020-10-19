@@ -6,17 +6,6 @@ let logRoutes = require('./controllers/logControllers');
 let userRoutes = require('./controllers/userControllers');
 let sequelizeInstance = require('./database');  // sequelize variable imports db file
 
-/*
-//  AUTHENTICATION SEQUENCE - get working after all else
-sequelize.authenticate().then(
-  function() {  // Fire a function that shows if we're connected
-    console.log('Connected to workoutlog postgres database');
-  },
-  function(err) {   //Fire an error if there are any errors
-    console.log(err);
-  }
-);
-*/
 
 // **********   Middleware   **********
 sequelizeInstance.sync(); // ensures that we sync all defined models to the DB
@@ -25,6 +14,16 @@ sequelizeInstance.sync(); // ensures that we sync all defined models to the DB
 expressApplication.use(express.json());               // MUST STAY ABOVE any routes;
 expressApplication.use(require('./middleware/headers'));   // activates headers, file read sequentially so it must come before the routes
 
+
+//  AUTHENTICATION SEQUENCE - get working after all else
+sequelizeInstance.authenticate().then(
+  function() {  // Fire a function that shows if we're connected
+    console.log('Connected to postgres database: jbworkoutlog');
+  },
+  function(err) {   //Fire an error if there are any errors
+    console.log(err);
+  }
+);
 
 
 // **********   Exposed Routes   **********
